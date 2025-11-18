@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Лабораторная №3</title>
+    <h:outputStylesheet library="css" name="main-styles.css"/>
+</h:head>
+
+<h:body>
+    <div class="page-wrapper">
+        <div class="main-container">
+
+            <h:form class="forms-container" id="mainForm">
+
+                <div class="change-block">
+                    <h2 class="change-title">Изменение X</h2>
+
+                  <h:selectOneRadio   id="x"
+                                      value="#{pointBean.x}"
+                                      required="true"
+                                      requiredMessage="Выберите X">
+                        <f:selectItem itemValue="-2" itemLabel="-2" />
+                        <f:selectItem itemValue="-1.5" itemLabel="-1.5" />
+                        <f:selectItem itemValue="-1" itemLabel="-1" />
+                        <f:selectItem itemValue="-0.5" itemLabel="-0.5" />
+                        <f:selectItem itemValue="0" itemLabel="0" />
+                        <f:selectItem itemValue="0.5" itemLabel="0.5" />
+                        <f:selectItem itemValue="1" itemLabel="1" />
+                        <f:selectItem itemValue="1.5" itemLabel="1.5" />
+                    </h:selectOneRadio>
+                </div>
+
+                <div class="change-block">
+                    <h2 class="change-title">Изменение Y</h2>
+                    <h:inputText class="input-unified"
+                                 id="y"
+                                 value="#{pointBean.y}"
+                                 required="true"
+                                 requiredMessage="Введите Y"
+                                 validatorMessage="Y должен быть числом от -5 до 3">
+                        <f:validateDoubleRange minimum="-5" maximum="3" />
+                    </h:inputText>
+                </div>
+
+                <div class="change-block">
+                    <h2 class="change-title">Изменение R</h2>
+
+<!--                    <p:remoteCommand name="redrawCanvasRemote"-->
+<!--                                     oncomplete="redrawCanvas(#{pointBean.r}, '#{pointBean.pointsJSON}')" />-->
+
+                    <p:spinner class="input-unified"
+                               id="r"
+                               value="#{pointBean.r}"
+                               min="1"
+                               max="3"
+                               step="0.5"
+                               stepFactor="0.5"
+                               decimalPlaces="1"
+                               required="true"
+                               requiredMessage="Введите значение R">
+
+<!--                        <p:ajax event="change"-->
+<!--                                oncomplete="redrawCanvasRemote()" />-->
+                    </p:spinner>
+
+                </div>
+
+                <div class="ready-button-block">
+
+                    <p:remoteCommand name="redrawCanvasRemote"
+                                     oncomplete="redrawCanvas(#{pointBean.r}, '#{pointBean.pointsJSON}')" />
+
+<!--                    <p:remoteCommand name="drawPointRemote"-->
+<!--                                     oncomplete="drawPoint(#{pointBean.x}, #{pointBean.y}, #{pointBean.r}, #{pointBean.hit})" />-->
+
+                    <p:commandButton value="Готово"
+                                     styleClass="button"
+                                     action="#{pointBean.checkPoint}"
+                                     update="@form result-table"
+                                     process="@form"
+                                     oncomplete="redrawCanvasRemote()">
+
+<!--                        <f:ajax execute="@form" render="@form :result-table"/>-->
+                    </p:commandButton>
+
+                    <h:messages class="field-errors"/>
+
+                </div>
+
+                <!-- Для клика по canvas -->
+                <h:inputHidden id="canvasX" value="#{pointBean.canvasX}" />
+                <h:inputHidden id="canvasY" value="#{pointBean.canvasY}" />
+
+                <p:remoteCommand name="submitPointFromCanvas"
+                                 action="#{pointBean.checkPointFromCanvas}"
+                                 process="@this mainForm:canvasX mainForm:canvasY mainForm:r"
+                                 update="@form result-table"
+                                 oncomplete="redrawCanvasRemote()" />
+
+
+            </h:form>
+
+            <div class="canvas-block">
+
+                <canvas id="canvas" width="400" height="400">canvas</canvas>
+
+            </div>
+
+        </div>
+
+        <div>
+
+            <p:dataTable class="data-table"
+                         id="result-table"
+                         value="#{listOfPointsBean.points}"
+                         var="p"
+                         paginator="true"
+                         rows="5"
+                         paginatorPosition="top">
+
+                <p:column>
+                    <f:facet name="header">X</f:facet>
+                    <h:outputText value="#{p.x}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Y</f:facet>
+                    <h:outputText value="#{p.y}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">R</f:facet>
+                    <h:outputText value="#{p.r}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Попадание</f:facet>
+                    <h:outputText value="#{p.hit ? 'Да' : 'Нет'}" />
+                </p:column>
+
+        </p:dataTable>
+
+        </div>
+
+        <div class="back-button-block">
+            <h:form>
+                <h:commandButton class="button"
+                                 value="Перейти к стартовой странице"
+                                 action="index.xhtml?faces-redirect=true" />
+            </h:form>
+        </div>
+    </div>
+
+    <h:outputScript library="js" name="canvas.js"/>
+    <h:outputScript library="js" name="canvasClick.js"/>
+
+</h:body>
+
+
+</html>

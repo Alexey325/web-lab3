@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Лабораторная №3</title>
+    <h:outputStylesheet name="css/index-styles.css"/>
+<!--    <meta http-equiv="refresh" content="9" />-->
+</h:head>
+
+<h:body>
+    <div class="header">
+        <h1 id="header-name">Таратенко Алексей</h1>
+        <h1 id="header-group">Группа: P3207</h1>
+        <h1 id="header-var">Вариант: 483928</h1>
+    </div>
+
+    <div class="image">
+        <h:graphicImage value="/resources/images/rabbit.jpg"
+                        alt="Rabbit"
+                        style="width:300px; height:auto;"/>
+    </div>
+
+
+    <div class="clock-section">
+        <h:outputText id="clock-display" value="#{clockBean.currentTime}" />
+
+        <p:poll interval="9" update="clock-display" />
+    </div>
+
+
+    <div>
+        <h:form class="navigation-section">
+            <h:commandButton class="main-page-button" value="Перейти к основной странице"
+                             action="main.xhtml?faces-redirect=true" />
+        </h:form>
+    </div>
+
+</h:body>
+
+</html>

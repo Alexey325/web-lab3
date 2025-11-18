@@ -1,0 +1,72 @@
+body {
+    background: #ffffff;
+    color: #2D3748FF;
+    font-family: "Impact", "fantasy";
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Impact", "fantasy";
+    font-size: 14px;
+    color: #2D3748FF;
+    background: #ffffff;
+    padding: 15px 0;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+#header-name, #header-group, #header-var {
+    margin: 8px;
+    font-weight: 600;
+}
+
+.clock-section {
+    padding: 35px 60px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#clock-display {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2D3748FF;
+    font-family: "Courier New", "Consolas", monospace;
+    letter-spacing: 2px;
+}
+
+/* Кнопка перехода на основную страницу */
+.navigation-section {
+    text-align: center;
+}
+
+.main-page-button {
+    background: #FFFFFF;
+    color: #2D3748FF;
+    border: 3px solid #2D3748FF;
+    border-radius: 12px;
+    padding: 14px 30px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.main-page-button:hover {
+    background: #2D3748FF;
+    color: #FFFFFF;
+    transform: translateY(-3px);
+}
+
+.main-page-button:active {
+    transform: translateY(-1px);
+}
+
+.image{
+    margin-top: 40px;
+    text-align: center;
+}
