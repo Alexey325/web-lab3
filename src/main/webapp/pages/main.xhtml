@@ -124,12 +124,16 @@
 
                 <p:column>
                     <f:facet name="header">X</f:facet>
-                    <h:outputText value="#{p.x}" />
+                    <h:outputText value="#{p.x}">
+                        <f:convertNumber maxFractionDigits="2"/>
+                    </h:outputText>
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">Y</f:facet>
-                    <h:outputText value="#{p.y}" />
+                    <h:outputText value="#{p.y}">
+                        <f:convertNumber maxFractionDigits="2"/>
+                    </h:outputText>
                 </p:column>
 
                 <p:column>
@@ -157,6 +161,12 @@
 
     <h:outputScript library="js" name="canvas.js"/>
     <h:outputScript library="js" name="canvasClick.js"/>
+
+    <h:outputScript>
+        document.addEventListener('DOMContentLoaded', function() {
+            redrawCanvasRemote();
+        });
+    </h:outputScript>
 
 </h:body>
 

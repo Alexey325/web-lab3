@@ -1,8 +1,17 @@
 package org.example.web3.entities;
 
+import javax.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "points")
 public class Point {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private BigDecimal x;
     private BigDecimal y;
     private BigDecimal r;
@@ -15,6 +24,8 @@ public class Point {
         this.r = r;
         this.hit = hit;
     }
+
+    public Point() {}
 
     public BigDecimal getX() { return x; }
     public void setX(BigDecimal x) { this.x = x; }

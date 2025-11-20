@@ -1,7 +1,10 @@
 package org.example.web3.beans;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.awt.*;
 import java.util.ArrayList;
 import org.example.web3.entities.Point;
@@ -11,13 +14,19 @@ import org.example.web3.entities.Point;
 
 public class ListOfPointsBean {
 
-    private final ArrayList<Point> points = new ArrayList<>();
+    @PersistenceContext(unitName = "pgPU")
+    private EntityManager em;
 
-//    public ListOfPointsBean() {
-//        // тестовые данные
-//        points.add(new Point(1, 2, 3));
-//        points.add(new Point(-2, 1.5, 2));
-//    }
+    private ArrayList<Point> points;
+
+    @PostConstruct
+    public void init() {
+        loadPointsFromDatabase();
+    }
+
+    private void loadPointsFromDatabase() {
+        points = new ArrayList<>(em.createQuery("SELECT p FROM Point p", Point.class).getResultList());
+    }
 
     public ArrayList<Point> getPoints() {
         return points;

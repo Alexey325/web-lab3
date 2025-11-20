@@ -2,12 +2,15 @@ package org.example.web3.beans;
 
 import org.example.web3.entities.Point;
 import org.example.web3.hitCheck.managers.HitChecker;
+import org.example.web3.service.PointService;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @ManagedBean(name = "pointBean")
@@ -25,6 +28,26 @@ public class PointBean {
     private BigDecimal canvasX;
     private BigDecimal canvasY;
 
+
+    @EJB
+    private PointService pointService;
+
+    public void savePoint() {
+        BigDecimal roundedX = x.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal roundedY = y.setScale(2, RoundingMode.HALF_UP);
+
+        Point point = new Point(roundedX, roundedY, r, hit);
+        pointService.addPoint(point);
+    }
+
+    public void savePointFromCanvas() {
+        BigDecimal roundedCanvasX = canvasX.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal roundedCanvasY = canvasY.setScale(2, RoundingMode.HALF_UP);
+
+        Point point = new Point(roundedCanvasX, roundedCanvasY, r, hit);
+        pointService.addPoint(point);
+    }
+
     public void checkPoint() {
 
         HitChecker hitChecker = new HitChecker(x, y, r);
@@ -32,6 +55,8 @@ public class PointBean {
 
         Point newPoint = new Point(x, y, r, hit);
         listOfPointsBean.addPoint(newPoint);
+
+        savePoint();
 
     }
 
@@ -42,6 +67,8 @@ public class PointBean {
 
         Point newPoint = new Point(canvasX, canvasY, r, hit);
         listOfPointsBean.addPoint(newPoint);
+
+         savePointFromCanvas();
 
     }
 
