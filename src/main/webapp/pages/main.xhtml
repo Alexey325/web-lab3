@@ -8,6 +8,7 @@
 <h:head>
     <title>Лабораторная №3</title>
     <h:outputStylesheet library="css" name="main-styles.css"/>
+
 </h:head>
 
 <h:body>
@@ -15,6 +16,9 @@
         <div class="main-container">
 
             <h:form class="forms-container" id="mainForm">
+
+                <p:remoteCommand name="redrawCanvasRemote"
+                                 oncomplete="redrawCanvas(#{pointBean.r}, '#{pointBean.pointsJSON}')" />
 
                 <div class="change-block">
                     <h2 class="change-title">Изменение X</h2>
@@ -49,9 +53,6 @@
                 <div class="change-block">
                     <h2 class="change-title">Изменение R</h2>
 
-<!--                    <p:remoteCommand name="redrawCanvasRemote"-->
-<!--                                     oncomplete="redrawCanvas(#{pointBean.r}, '#{pointBean.pointsJSON}')" />-->
-
                     <p:spinner class="input-unified"
                                id="r"
                                value="#{pointBean.r}"
@@ -63,28 +64,23 @@
                                required="true"
                                requiredMessage="Введите значение R">
 
-<!--                        <p:ajax event="change"-->
-<!--                                oncomplete="redrawCanvasRemote()" />-->
+                        <p:ajax event="valueChange"
+                                process="@this"
+                                update="@form"
+                                oncomplete="redrawCanvasRemote()" />
                     </p:spinner>
 
                 </div>
 
                 <div class="ready-button-block">
 
-                    <p:remoteCommand name="redrawCanvasRemote"
-                                     oncomplete="redrawCanvas(#{pointBean.r}, '#{pointBean.pointsJSON}')" />
+                       <p:commandButton value="Готово"
+                                        styleClass="button"
+                                        action="#{pointBean.checkPoint}"
+                                        update="@form result-table"
+                                        process="@form"
+                                        oncomplete="redrawCanvasRemote()">
 
-<!--                    <p:remoteCommand name="drawPointRemote"-->
-<!--                                     oncomplete="drawPoint(#{pointBean.x}, #{pointBean.y}, #{pointBean.r}, #{pointBean.hit})" />-->
-
-                    <p:commandButton value="Готово"
-                                     styleClass="button"
-                                     action="#{pointBean.checkPoint}"
-                                     update="@form result-table"
-                                     process="@form"
-                                     oncomplete="redrawCanvasRemote()">
-
-<!--                        <f:ajax execute="@form" render="@form :result-table"/>-->
                     </p:commandButton>
 
                     <h:messages class="field-errors"/>
@@ -159,14 +155,14 @@
         </div>
     </div>
 
-    <h:outputScript library="js" name="canvas.js"/>
-    <h:outputScript library="js" name="canvasClick.js"/>
-
     <h:outputScript>
         document.addEventListener('DOMContentLoaded', function() {
             redrawCanvasRemote();
         });
     </h:outputScript>
+
+    <h:outputScript library="js" name="canvas.js"/>
+    <h:outputScript library="js" name="canvasClick.js"/>
 
 </h:body>
 

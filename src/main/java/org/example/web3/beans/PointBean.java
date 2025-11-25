@@ -5,16 +5,18 @@ import org.example.web3.hitCheck.managers.HitChecker;
 import org.example.web3.service.PointService;
 
 import javax.ejb.EJB;
+import javax.el.MethodExpression;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
 @ManagedBean(name = "pointBean")
-@SessionScoped
+@ViewScoped
 public class PointBean {
 
     @ManagedProperty(value = "#{listOfPointsBean}")
@@ -116,6 +118,5 @@ public class PointBean {
 
     public void setCanvasY(BigDecimal canvasY) { this.canvasY = canvasY; }
     public BigDecimal getCanvasY() { return canvasY; }
-
 
 }
