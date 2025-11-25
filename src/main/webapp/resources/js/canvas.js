@@ -157,13 +157,4 @@ function redrawCanvas(r, jsonString) {
         drawPoint(point.x, point.y, r, point.hit);
     });
 
-    // const rows = document.querySelectorAll('.data-table tbody tr');
-    //
-    // rows.forEach(row => {
-    //     const x = parseFloat(row.cells[0].textContent);
-    //     const y = parseFloat(row.cells[1].textContent);
-    //     const hit = row.cells[3].textContent.trim();
-    //
-    //     drawPoint(x, y, r, hit)
-    // });
 }
